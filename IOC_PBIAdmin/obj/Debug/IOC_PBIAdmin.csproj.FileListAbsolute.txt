@@ -1,0 +1,17 @@
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\IOC_PBIAdmin.dll
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\IOC_PBIAdmin.pdb
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.xml
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.csproj.CoreCompileInputs.cache
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.csproj.CopyComplete
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.dll
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.pdb
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.xml
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\IOC_PBIAdmin.dll.config
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Microsoft.PowerBI.Api.dll
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Microsoft.Rest.ClientRuntime.dll
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Microsoft.Rest.ClientRuntime.xml
+C:\Users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\bin\Debug\Newtonsoft.Json.xml
+c:\users\mlenart\source\repos\IOC\PowerBI\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.csprojAssemblyReference.cache
