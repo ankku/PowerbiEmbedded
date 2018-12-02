@@ -61,4 +61,43 @@ namespace IOC_PBIAdmin
         public bool isOnDedicatedCapacity { get; set; }
         public string name { get; set; }
     }
+
+    public class PBIDataSets
+    {
+        public PBIDataSet[] value { get; set; }
+        public List<PBIDataSet> List
+        {
+            get { return value.ToList(); }
+        }
+    }
+
+    public class PBIDataSet
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public bool addRowsAPIEnabled { get; set; }
+        public string configuredBy { get; set; }
+        public bool isRefreshable { get; set; }
+        public bool isEffectiveIdentityRequired { get; set; }
+        public bool isEffectiveIdentityRolesRequired { get; set; }
+        public bool isOnPremGatewayRequired { get; set; }
+    }
+
+    public class PBIRefreshes
+    {
+        public PBIRefresh[] value { get; set; }
+        public List<PBIRefresh> List
+        {
+            get { return value.ToList(); }
+        }
+    }
+    public class PBIRefresh
+    {
+        public string id { get; set; }
+        public string refreshType { get; set; }
+        public DateTime startTime { get; set; }
+        public DateTime endTime { get; set; }
+        public string serviceExceptionJson { get; set; }
+        public string status { get; set; }
+    }
 }

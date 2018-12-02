@@ -28,7 +28,12 @@ namespace IOC_PBIAdmin_Client
             //PBIManager.ExportReportREST("IOC Test", "Machine Learning Dashboard");
             //PBIManager.CloneReportREST("IOC Test", "Machine Learning Dashboard", "IOC Admin Test", "Machine Learning Dashboard.pbix");
 
-            PBIManager.GetEmbedTokenExample();
+            //PBIManager.GetEmbedTokenExample();
+
+            //            https://api.powerbi.com/v1.0/myorg/groups/ce5ceba0-aad3-4230-93a1-bf1f91dce682/datasets/7a5732b0-a82f-472f-8662-9d7d1a2d39e2/refreshes
+            // PBIManager.DumpRefreshesREST();
+
+            PBIManager.GetGroupsREST();
             Console.ReadLine();
         }
     }

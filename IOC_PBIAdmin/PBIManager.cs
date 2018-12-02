@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Configuration;
+using System.Collections.Generic;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.PowerBI.Api.V2;
 using Microsoft.PowerBI.Api.V2.Models;
@@ -97,25 +98,25 @@ namespace IOC_PBIAdmin
          * https://github.com/Microsoft/PowerBI-Developer-Samples
          * https://microsoft.github.io/PowerBI-JavaScript/demo/v2-demo/index.html#
          */
-/*
-        public static async Task<EmbedConfig> GetEmbedConfig()
-        {
-            EmbedToken embedToken = await Client.Reports.GenerateTokenInGroupAsync(SampleGroupId, SampleReportId, new GenerateTokenRequest(accessLevel: "view", datasetId: "[DATASET ID]"));
-            Report report = await Client.Reports.GetReportAsync(SampleGroupId, SampleReportId);
+        /*
+                public static async Task<EmbedConfig> GetEmbedConfig()
+                {
+                    EmbedToken embedToken = await Client.Reports.GenerateTokenInGroupAsync(SampleGroupId, SampleReportId, new GenerateTokenRequest(accessLevel: "view", datasetId: "[DATASET ID]"));
+                    Report report = await Client.Reports.GetReportAsync(SampleGroupId, SampleReportId);
 
-            var result = new EmbedConfig()
-            {
-                Id = report.Id,
-                EmbedToken = embedToken,
-                EmbedUrl = report.EmbedUrl
-            };
+                    var result = new EmbedConfig()
+                    {
+                        Id = report.Id,
+                        EmbedToken = embedToken,
+                        EmbedUrl = report.EmbedUrl
+                    };
 
-            return result;
-        }
-*/
+                    return result;
+                }
+        */
         public static void GetEmbedTokenExample()
         {
-            
+
 
             EmbedToken embedToken = Client.Reports.GenerateTokenInGroup(SampleGroupId, SampleReportId, new GenerateTokenRequest(accessLevel: "view", datasetId: "[DATASET ID]"));
             Report report = Client.Reports.GetReport(SampleGroupId, SampleReportId);
@@ -186,20 +187,20 @@ namespace IOC_PBIAdmin
 
         private static void CloneReport(Group targetGroup, Report report)
         {
-/*
-            Dataset sourceDataSet = Client.Datasets.GetDatasetById(report.DatasetId);
-            Datasource sourceDataSource = sourceDataSet.Datasources[0];
+            /*
+                        Dataset sourceDataSet = Client.Datasets.GetDatasetById(report.DatasetId);
+                        Datasource sourceDataSource = sourceDataSet.Datasources[0];
 
-            Datasource datasource = new Datasource(
-                                                    sourceDataSource.Name,
-                                                    sourceDataSource.ConnectionString,
-                                                    sourceDataSource.DatasourceType,
-                                                    sourceDataSource.ConnectionDetails,
-                                                    sourceDataSource.GatewayId,
-                                                    sourceDataSource.DatasourceId);
-            Dataset dataset = new Dataset();
-            dataset.Datasources.Add(datasource);
-*/
+                        Datasource datasource = new Datasource(
+                                                                sourceDataSource.Name,
+                                                                sourceDataSource.ConnectionString,
+                                                                sourceDataSource.DatasourceType,
+                                                                sourceDataSource.ConnectionDetails,
+                                                                sourceDataSource.GatewayId,
+                                                                sourceDataSource.DatasourceId);
+                        Dataset dataset = new Dataset();
+                        dataset.Datasources.Add(datasource);
+            */
 
 
             CloneReportRequest request = new CloneReportRequest(report.Name, targetGroup.Id, report.DatasetId);
@@ -216,6 +217,11 @@ namespace IOC_PBIAdmin
             string url = APIbaseURL + RESTurl;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+            request.ContentType = "application/json";
+            request.MediaType = "application/json";
+            request.Accept = "application/json";
+
             request.ContentLength = 0;
             request.Method = "GET";
             request.Headers.Add("Authorization", String.Format("Bearer {0}", Token));
@@ -232,6 +238,14 @@ namespace IOC_PBIAdmin
             PBIGroups pbiGroups = JsonConvert.DeserializeObject<PBIGroups>(responseContent);
 
             return pbiGroups;
+        }
+
+        public static PBIDataSets GetDatasetsREST(string groupId)
+        {
+            string responseContent = RESTWrapper(String.Format("groups/{0}/datasets", groupId));
+            PBIDataSets pbidatasets = JsonConvert.DeserializeObject<PBIDataSets>(responseContent);
+
+            return pbidatasets;
         }
 
         public static PBIGroup GetGroupByNameREST(string groupName)
@@ -359,7 +373,57 @@ namespace IOC_PBIAdmin
             }
 
         }
-        #endregion
 
+        public static PBIRefreshes GetRefreshesREST(string groupId, string datasetId)
+        {
+            string refreshesContent = RESTWrapper(String.Format("groups/{0}/datasets/{1}/refreshes", groupId, datasetId));
+            PBIRefreshes refreshes = JsonConvert.DeserializeObject<PBIRefreshes>(refreshesContent);
+
+            return refreshes;
+        }
+    
+        public static void DumpRefreshesREST()
+        {
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(String.Format(@".\Refreshes_{0}.csv", DateTime.Now.ToString("yyyyMMddhhmmss")));
+            sw.WriteLine("Workspace;DataSet;RefreshType;StartTime;EndTime;Status");
+
+            Dictionary<PBIGroup, PBIDataSets> groupDatasets = new Dictionary<PBIGroup, PBIDataSets>();
+
+            PBIGroups groups = GetGroupsREST();
+            foreach (PBIGroup group in groups.List)
+            {
+                PBIDataSets datasets = GetDatasetsREST(group.id);
+
+                foreach (PBIDataSet dataset in datasets.List)
+                {
+                    try
+                    {
+                        PBIRefreshes refreshes = GetRefreshesREST(group.id, dataset.id);
+
+                        foreach (PBIRefresh refresh in refreshes.List)
+                        {
+
+                            sw.WriteLine(String.Join(";", new String[]{
+                            group.name,
+                            dataset.name,
+                            refresh.refreshType,
+                            refresh.startTime.ToString("yyyy.MM.dd hh:mm:ss"),
+                            refresh.endTime.ToString("yyyy.MM.dd hh:mm:ss"),
+                            refresh.status
+                        }));
+                        }
+                    }
+                    catch
+                    {
+                        sw.WriteLine(group.name + ";" + dataset.name + ";;;;");
+
+                    }
+                }
+            }
+
+            sw.Close();
+        }
+
+    #endregion
     }
 }

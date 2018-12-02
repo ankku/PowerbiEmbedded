@@ -54,6 +54,7 @@
     <ProjectReference Include="..\IOC_PBIAdmin\IOC_PBIAdmin.csproj">
       <Project>{1060d1b4-c967-4206-934b-aeafdcbdc3db}</Project>
       <Name>IOC_PBIAdmin</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
