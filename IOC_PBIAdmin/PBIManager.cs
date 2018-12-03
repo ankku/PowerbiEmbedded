@@ -381,7 +381,7 @@ namespace IOC_PBIAdmin
 
             return refreshes;
         }
-    
+
         public static void DumpRefreshesREST()
         {
             System.IO.StreamWriter sw = new System.IO.StreamWriter(String.Format(@".\Refreshes_{0}.csv", DateTime.Now.ToString("yyyyMMddhhmmss")));
@@ -389,36 +389,68 @@ namespace IOC_PBIAdmin
 
             Dictionary<PBIGroup, PBIDataSets> groupDatasets = new Dictionary<PBIGroup, PBIDataSets>();
 
-            PBIGroups groups = GetGroupsREST();
-            foreach (PBIGroup group in groups.List)
-            {
-                PBIDataSets datasets = GetDatasetsREST(group.id);
+            string groupName = null, datasetName = null;
+            int datasetCount = 0, groupCount = 0;
 
-                foreach (PBIDataSet dataset in datasets.List)
+            try
+            {
+                groupName = "";
+                PBIGroups groups = GetGroupsREST();
+
+                foreach (PBIGroup group in groups.List)
                 {
+                    groupCount++;
+                    groupName = group.name;
+                    datasetCount = 0;
+                    datasetName = "";
+
                     try
                     {
-                        PBIRefreshes refreshes = GetRefreshesREST(group.id, dataset.id);
+                        PBIDataSets datasets = GetDatasetsREST(group.id);
+                        Console.WriteLine(String.Format("Group: {0} ({1} / {2})", group.name, groupCount, groups.List.Count));
 
-                        foreach (PBIRefresh refresh in refreshes.List)
+                        foreach (PBIDataSet dataset in datasets.List)
                         {
+                            try
+                            {
+                                datasetCount++;
+                                datasetName = dataset.name;
+                                PBIRefreshes refreshes = GetRefreshesREST(group.id, dataset.id);
 
-                            sw.WriteLine(String.Join(";", new String[]{
-                            group.name,
-                            dataset.name,
-                            refresh.refreshType,
-                            refresh.startTime.ToString("yyyy.MM.dd hh:mm:ss"),
-                            refresh.endTime.ToString("yyyy.MM.dd hh:mm:ss"),
-                            refresh.status
-                        }));
+                                Console.WriteLine(String.Format("     Dataset: {0} ({1} / {2}) - {3} refreshes", dataset.name, datasetCount, datasets.List.Count, refreshes.List.Count));
+
+                                foreach (PBIRefresh refresh in refreshes.List)
+                                {
+
+                                    datasetName = dataset.name;
+
+                                    sw.WriteLine(String.Join(";", new String[]{
+                                                group.name,
+                                                dataset.name,
+                                                refresh.refreshType,
+                                                refresh.startTime.ToString("yyyy.MM.dd hh:mm:ss"),
+                                                refresh.endTime.ToString("yyyy.MM.dd hh:mm:ss"),
+                                                refresh.status
+                                            }));
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("     Query error (group: " + groupName + ", dataset: " + datasetName + ")");
+                                sw.WriteLine(groupName + ";" + datasetName + ";;;;");
+                            }
                         }
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        sw.WriteLine(group.name + ";" + dataset.name + ";;;;");
-
+                        Console.WriteLine("Query error (group: " + groupName + ")");
+                        sw.WriteLine(groupName + ";;;;;");
                     }
                 }
+            }
+            catch
+            {
+                Console.WriteLine("Query error");
             }
 
             sw.Close();

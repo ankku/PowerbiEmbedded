@@ -30,10 +30,20 @@ namespace IOC_PBIAdmin_Client
 
             //PBIManager.GetEmbedTokenExample();
 
-            //            https://api.powerbi.com/v1.0/myorg/groups/ce5ceba0-aad3-4230-93a1-bf1f91dce682/datasets/7a5732b0-a82f-472f-8662-9d7d1a2d39e2/refreshes
-            // PBIManager.DumpRefreshesREST();
+            Console.WriteLine("*******************");
+            Console.WriteLine("*** Query Start ***");
+            Console.WriteLine("*******************");
+            Console.WriteLine("");
 
-            PBIManager.GetGroupsREST();
+            PBIManager.DumpRefreshesREST();
+
+            Console.WriteLine("");
+            Console.WriteLine("*******************");
+            Console.WriteLine("***  Query End  ***");
+            Console.WriteLine("*******************");
+
+            Console.WriteLine("(Press ENTER)");
+
             Console.ReadLine();
         }
     }
