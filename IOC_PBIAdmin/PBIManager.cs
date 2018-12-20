@@ -56,6 +56,11 @@ namespace IOC_PBIAdmin
             Client = new PowerBIClient(new Uri(ApiUrl), tokenCredentials);
         }
 
+        private static void InitAuthenticationContext()
+        {
+            AuthenticationContext authContext = new AuthenticationContext(AuthorityUrl, new FileCache());
+        }
+
         #region Constructor Helpers
         private static async Task<string> GetToken(string clientId)
         {

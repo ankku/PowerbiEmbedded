@@ -1,0 +1,30 @@
+﻿<Window x:Class="PBIAdminApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PBIAdminApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid Margin="0,0,2,0" RenderTransformOrigin="0.497,0.455" Height="419" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+
+        <StatusBar Margin="0,0,0,384" Height="35" VerticalAlignment="Bottom"/>
+        <TreeView x:Name="twWorkspaceHierarchy" HorizontalAlignment="Left" Height="355" VerticalAlignment="Top" Width="196" SelectedItemChanged="WorkspaceHierarchy_SelectedItemChanged" Margin="10,40,0,0"/>
+        <Grid x:Name="gridRefreshes" HorizontalAlignment="Left" Height="355" Margin="230,40,0,0" VerticalAlignment="Top" Width="550">
+            <ToolBarPanel HorizontalAlignment="Left" Height="100" Margin="198,85,0,0" VerticalAlignment="Top" Width="100"/>
+            <Expander x:Name="expUser" Header="Expander" HorizontalAlignment="Right" Height="128" Margin="333,-31,0,0" VerticalAlignment="Top" Width="207">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="84*"/>
+                        <ColumnDefinition Width="121*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="lblName" HorizontalAlignment="Right" Grid.Column="1"></Label>
+                    <Button Content="Sign out" HorizontalAlignment="Left" Margin="35.711,74,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1" Grid.Column="1"/>
+                </Grid>
+            </Expander>
+
+        </Grid>
+
+    </Grid>
+</Window>

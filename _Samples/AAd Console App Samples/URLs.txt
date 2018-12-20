@@ -1,0 +1,3 @@
+Azure Active Directory code samples (v1.0 endpoint)
+
+https://docs.microsoft.com/en-us/azure/active-directory/develop/sample-v1-code#desktop-and-mobile-public-client-applications-calling-microsoft-graph-or-a-web-api

@@ -25,21 +25,23 @@ scopes = {
 [DataSource.Kind="Power_BI_API_Connector", Publish="Power_BI_API_Connector.Publish"]
 shared Power_BI_API_Connector.Contents = () =>
     let
-        GroupsTable = QueryAPI("groups"),
+        GroupsTable = QueryAPI("myorg/groups"),
         GroupsColumns = Table.ExpandRecordColumn(GroupsTable, "Column1", {"id", "isOnDedicatedCapacity", "name"}, {"id", "isOnDedicatedCapacity", "name"}),
         Groups = Table.RenameColumns(GroupsColumns,{{"id", "GroupId"}, {"name", "GroupName"}}),
 
-        DataSetsResult = Table.AddColumn(Groups, "DataSets", each QueryAPI("groups/" & [GroupId] & "/datasets" )),
+        DataSetsResult = Table.AddColumn(Groups, "DataSets", each QueryAPI("myorg/groups/" & [GroupId] & "/datasets" )),
         DataSetsTable = Table.ExpandTableColumn(DataSetsResult, "DataSets", {"Column1"}, {""}),
-        DataSetColumns = Table.ExpandRecordColumn(DataSetsTable, "", {"id", "isOnDedicatedCapacity", "name"}, {"id", "isOnDedicatedCapacity", "name"}),
+        DataSetColumns = Table.ExpandRecordColumn(DataSetsTable, "", {"id", "name"}, {"id", "name"}),
         DataSets = Table.RenameColumns(DataSetColumns,{{"id", "DataSetId"}, {"name", "DataSetName"}}),
 
-        RefreshesResult = Table.AddColumn(DataSets, "Refreshes", each QueryAPI("groups/" & [GroupId] & "/datasets/" & [DataSetId] & "/refreshes" )),
+        RefreshesResult = Table.AddColumn(DataSets, "Refreshes", each QueryAPI("myorg/groups/" & [GroupId] & "/datasets/" & [DataSetId] & "/refreshes?$top=1" )),
         RefreshErrors = Table.RemoveRowsWithErrors(RefreshesResult, {"Refreshes"}),
         RefreshTable = Table.ExpandTableColumn(RefreshErrors, "Refreshes", {"Column1"}, {"Column1"}),
         RefreshColumns = Table.ExpandRecordColumn(RefreshTable, "Column1", {"id", "refreshType", "startTime", "endTime", "status"}, {"id", "refreshType", "startTime", "endTime", "status"}),
         Refreshes = Table.RenameColumns(RefreshColumns,{{"id", "RefreshId"}, {"refreshType", "RefreshType"}, {"startTime", "RefreshStartTime"}, {"endTime", "RefreshEndTime"}, {"status", "RefreshStatus"}})
+
     in
+        //DataSets;
         Refreshes;
 
 // Data Source Kind description
@@ -194,7 +196,7 @@ GetScopeString = (scopes as list, optional scopePrefix as text) as text =>
 
 QueryAPI = (query as text) =>
     let
-        source = Web.Contents("https://api.powerbi.com/v1.0/myorg/" & query,
+        source = Web.Contents("https://api.powerbi.com/v1.0/" & query,
                         [Headers = [
                             #"Content-type" = "application/json",
                             #"Accept" = "application/json"
