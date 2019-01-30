@@ -34,3 +34,5 @@ C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin_Client\obj\Debug\
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin_Client\obj\Debug\IOC_PBIAdmin_Client.csproj.CopyComplete
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin_Client\obj\Debug\IOC_PBIAdmin_Client.exe
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin_Client\obj\Debug\IOC_PBIAdmin_Client.pdb
+C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin_Client\bin\Debug\Microsoft.Identity.Client.dll
+C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin_Client\bin\Debug\Microsoft.Identity.Client.xml

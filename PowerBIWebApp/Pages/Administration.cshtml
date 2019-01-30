@@ -1,0 +1,29 @@
+﻿@page
+@model PowerBIWebApp.Pages.AdministrationModel
+@{
+    ViewData["Title"] = "Administration";
+}
+
+<h2>Tenant groups</h2>
+
+@if (Model.adminGroups != null)
+{
+<table class="table">
+    <th>Name</th>
+    <th>CapacityId</th>
+    <th>State</th>
+    <th>Type</th>
+    <th>Users.Count</th>
+
+    @foreach (var group in Model.adminGroups)
+    {
+        <tr>
+            <td>@group.Name</td>
+            <td>@group.CapacityId</td>
+            <td>@group.State</td>
+            <td>@group.Type</td>
+            <td>@group.Users.Count</td>
+        </tr>
+    }
+</table>
+}

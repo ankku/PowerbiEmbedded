@@ -31,4 +31,6 @@ C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin\obj\Debug\IOC_PBI
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.csproj.CopyComplete
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.dll
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.pdb
+C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin\bin\Debug\Microsoft.Identity.Client.dll
+C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin\bin\Debug\Microsoft.Identity.Client.xml
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\IOC_PBIAdmin\obj\Debug\IOC_PBIAdmin.csprojAssemblyReference.cache

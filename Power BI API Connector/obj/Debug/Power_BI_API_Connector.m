@@ -25,10 +25,10 @@ scopes = {
 [DataSource.Kind="Power_BI_API_Connector", Publish="Power_BI_API_Connector.Publish"]
 shared Power_BI_API_Connector.Contents = () =>
     let
-        GroupsTable = QueryAPI("myorg/groups"),
+        GroupsTable = QueryAPI("myorg/admin/groups"),
         GroupsColumns = Table.ExpandRecordColumn(GroupsTable, "Column1", {"id", "isOnDedicatedCapacity", "name"}, {"id", "isOnDedicatedCapacity", "name"}),
-        Groups = Table.RenameColumns(GroupsColumns,{{"id", "GroupId"}, {"name", "GroupName"}}),
-
+        Groups = Table.RenameColumns(GroupsColumns,{{"id", "GroupId"}, {"name", "GroupName"}})
+/*
         DataSetsResult = Table.AddColumn(Groups, "DataSets", each QueryAPI("myorg/groups/" & [GroupId] & "/datasets" )),
         DataSetsTable = Table.ExpandTableColumn(DataSetsResult, "DataSets", {"Column1"}, {""}),
         DataSetColumns = Table.ExpandRecordColumn(DataSetsTable, "", {"id", "name"}, {"id", "name"}),
@@ -39,10 +39,11 @@ shared Power_BI_API_Connector.Contents = () =>
         RefreshTable = Table.ExpandTableColumn(RefreshErrors, "Refreshes", {"Column1"}, {"Column1"}),
         RefreshColumns = Table.ExpandRecordColumn(RefreshTable, "Column1", {"id", "refreshType", "startTime", "endTime", "status"}, {"id", "refreshType", "startTime", "endTime", "status"}),
         Refreshes = Table.RenameColumns(RefreshColumns,{{"id", "RefreshId"}, {"refreshType", "RefreshType"}, {"startTime", "RefreshStartTime"}, {"endTime", "RefreshEndTime"}, {"status", "RefreshStatus"}})
-
+*/
     in
+        Groups;
         //DataSets;
-        Refreshes;
+        //Refreshes;
 
 // Data Source Kind description
 Power_BI_API_Connector = [

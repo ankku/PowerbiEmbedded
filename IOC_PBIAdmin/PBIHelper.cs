@@ -5,73 +5,100 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using Microsoft.PowerBI.Api.V2;
 
 namespace IOC_PBIAdmin
 {
-    public static class PBIConfig
+    internal static class PBIConfig
     {
-        static PBIConfig()
+        private static string authMode = null;
+        public static string AuthMode
         {
-            AuthMode = ConfigurationManager.AppSettings["authMode"];
-            //Credentials
-            ClientId = ConfigurationManager.AppSettings["applicationId"];
-            UserName = ConfigurationManager.AppSettings["pbiUsername"];
-            Password = ConfigurationManager.AppSettings["pbiPassword"];
-
-            //URLs
-            APIbaseURL = ConfigurationManager.AppSettings["APIbaseURL"];
-            ApiUrl = ConfigurationManager.AppSettings["apiUrl"];
-            Token = ConfigurationManager.AppSettings["token"];
-
-            //RedirectUri you used when you register your app.
-            //For a client app, a redirect uri gives Azure AD more details on the application that it will authenticate.
-            // You can use this redirect uri for your client app
-            RedirectUrl = ConfigurationManager.AppSettings["redirectUrl"];
-            
-            //Resource Uri for Power BI API
-            ResourceUrl = ConfigurationManager.AppSettings["resourceUrl"];
-
-            //OAuth2 authority Uri
-            AuthorityUrl = ConfigurationManager.AppSettings["authorityUrl"];
-
-            //Sample GUIDs
-            SampleReportId = ConfigurationManager.AppSettings["reportId"];
-            SampleGroupId = ConfigurationManager.AppSettings["workspaceId"];
-
+            get { return (authMode != null) ? authMode : ConfigurationManager.AppSettings["authMode"]; }
+            set { authMode = value; }
         }
 
-        public static string AuthMode { get;  }
-        public static string ClientId { get;  }
-        public static string UserName { get; }
-        public static string Password { get; }
+        private static string clientId = null;
+        public static string ClientId
+        {
+            get { return (clientId != null) ? clientId : ConfigurationManager.AppSettings["applicationId"]; }
+            set { clientId= value; }
+        }
+
+        private static string clientSecret = null;
+        public static string ClientSecret
+        {
+            get { return (clientSecret != null) ? clientSecret: ConfigurationManager.AppSettings["secret"]; }
+            set { clientSecret = value; }
+        }
+
+        private static string userName = null;
+        public static string UserName
+        {
+            get { return (userName != null) ? userName : ConfigurationManager.AppSettings["userName"]; }
+            set { userName = value; }
+        }
 
         //URLs
-        public static string APIbaseURL { get; }
-        public static string ApiUrl { get; }
-        public static string Token { get; }
+        public static string apiBaseUrl = "https://api.powerbi.com/v1.0/myorg/";
+        public static string APIbaseURL
+        {
+            get { return (apiBaseUrl != null) ? apiBaseUrl : ConfigurationManager.AppSettings["APIbaseURL"]; }
+            set { apiBaseUrl = value; }
+        }
 
-        //The client id that Azure AD created when you registered your client app.
-        //private static PowerBIClient Client = null;
+        private static string apiUrl = null;
+        public static string ApiUrl
+        {
+            get { return (apiUrl != null) ? apiUrl : ConfigurationManager.AppSettings["apiUrl"]; }
+            set { apiUrl = value; }
+        }
 
         //RedirectUri you used when you register your app.
         //For a client app, a redirect uri gives Azure AD more details on the application that it will authenticate.
         // You can use this redirect uri for your client app
-        public static string RedirectUrl { get;  }
+        private static string redirectUrl = "urn:ietf:wg:oauth:2.0:oob";
+        public static string RedirectUrl
+        {
+            get { return (redirectUrl != null) ? redirectUrl : ConfigurationManager.AppSettings["redirectUrl"]; }
+            set { redirectUrl = value; }
+        }
 
         //Resource Uri for Power BI API
-        public static string ResourceUrl { get; }
+        private static string resourceUrl = "https://analysis.windows.net/powerbi/api";
+        public static string ResourceUrl
+        {
+            get { return (resourceUrl != null) ? resourceUrl : ConfigurationManager.AppSettings["resourceUrl"]; }
+            set { resourceUrl = value; }
+        }
 
         //OAuth2 authority Uri
-        public static string AuthorityUrl { get; }
+        private static string authorityUrl = "https://login.microsoftonline.com/common/oauth2/authorize";
+        public static string AuthorityUrl
+        {
+            get { return (authorityUrl != null) ? authorityUrl : ConfigurationManager.AppSettings["authorityUrl"]; }
+            set { authorityUrl = value; }
+        }
 
         //Sample GUIDs
-        public static string SampleReportId { get; }
-        public static string SampleGroupId { get; }
+        private static string sampleReportId = null;
+        public static string SampleReportId
+        {
+            get { return (sampleReportId != null) ? sampleReportId : ConfigurationManager.AppSettings["reportId"]; }
+            set { sampleReportId = value; }
+        }
+
+        private static string sampleGroupId = null;
+        public static string SampleGroupId
+        {
+            get { return (sampleGroupId != null) ? sampleGroupId : ConfigurationManager.AppSettings["workspaceId"]; }
+            set { sampleGroupId = value; }
+        }
     }
 
     public class User
     {
-        public string ClientId {get; }
+        public string ClientId { get; }
         public string DisplayableId { get; }
         public string FamilyName { get; }
         public string GivenName { get; }
@@ -168,6 +195,7 @@ namespace IOC_PBIAdmin
             get { return value.ToList(); }
         }
     }
+
     public class PBIRefresh
     {
         public string id { get; set; }

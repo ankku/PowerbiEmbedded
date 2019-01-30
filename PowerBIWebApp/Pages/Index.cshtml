@@ -1,12 +1,68 @@
-﻿@page 
+﻿@page
+
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
+<div>
+
+    <form asp-page-handler="data" method="post">
+        https://analysis.windows.net/powerbi/api/
+        <select id="Select1" asp-for="Query">
+            <option>groups</option>
+            <option>reports</option>
+            <option>datasets</option>
+            <!--option>admin/groups</option-->
+        </select>
+        <!--       <input type="search" asp-for="Query" />     -->
+        <button>Query</button>
+    </form>
+</div>
+
+<br />
+<table class="table">
+    @if (Model.TableContent != null)
+    {
+        foreach (System.Data.DataColumn col in Model.TableContent.Columns)
+        {
+            <th>@col.ColumnName</th>
+        }
+
+        foreach (System.Data.DataRow row in Model.TableContent.Rows)
+        {
+            <tr>
+                @foreach (System.Data.DataColumn col in Model.TableContent.Columns)
+                {
+                    <td> @row[col].ToString() </td>
+                }
+            </tr>
+        }
+    }
+</table>
+
+<meta charset="utf-8">
+<title>jQuery UI Datepicker functionality</title>
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<!-- Javascript -->
+<script>
+    $(function () {
+        $("#datepicker-13").datepicker();
+        $("#datepicker-13").datepicker("show");
+    });
+</script>
+
+<!-- HTML -->
+<p>Enter Date: <input type="text" id="datepicker-13"></p>
 
 
-<!--div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+
+<!--
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -55,9 +111,9 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
-</div-->
+</div>
 
-<!--div class="row">
+<div class="row">
     <div class="col-md-3">
         <h2>Application uses</h2>
         <ul>
@@ -95,4 +151,5 @@
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure App Service</a></li>
         </ul>
     </div>
-</div-->
+</div>
+-->

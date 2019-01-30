@@ -36,7 +36,7 @@ namespace IOC_PBIAdmin_Client
 
             //PBIManager.GetEmbedTokenExample();
 
-            TokenService.ClearCache();
+//            TokenService.ClearCache();
 
             Console.WriteLine("*******************");
             Console.WriteLine("*** Query Start ***");
@@ -45,13 +45,18 @@ namespace IOC_PBIAdmin_Client
 
             try
             {
-//                PBIGroups adminGroups = PBIManagerREST.GetGroupsAdmin();
-                PBIGroups adminGroups = PBIManagerREST.GetGroups();
+                PBIManager.test();
+//                TokenService.FetchTokenConfidential();
+
+/*
+                PBIGroups adminGroups = PBIManagerREST.GetGroupsAdmin();
+//                PBIGroups adminGroups = PBIManagerREST.GetGroups();
 
                 foreach (PBIGroup adminGroup in adminGroups.List)
                 {
                     Console.WriteLine(adminGroup.name);
                 }
+*/
             }
             catch (Exception e)
             {
