@@ -14,6 +14,8 @@ namespace PowerBIWebApp.Pages
 {
     public class AdministrationModel : PageModel
     {
+        public string Message { get; set; }
+        public bool HasMessage { get { return Message != null; } }
         public List<Group> adminGroups { get; set; }
         public Dataset adminGroupsDs { get; set; }
 
@@ -25,12 +27,20 @@ namespace PowerBIWebApp.Pages
 
         public void OnGet()
         {
-            string token = GetToken();
-            string apiUrl = _configuration["AppSettings:ApiUrl"];
+            try
+            {
+                string token = GetToken();
+                string apiUrl = _configuration["AppSettings:ApiUrl"];
 
-            PowerBIClient pbiClient = new PowerBIClient(new Uri(apiUrl), new Microsoft.Rest.TokenCredentials(token));
+                PowerBIClient pbiClient = new PowerBIClient(new Uri(apiUrl), new Microsoft.Rest.TokenCredentials(token));
 
-            adminGroups = pbiClient.Groups.GetGroupsAsAdmin().Value.ToList();
+                adminGroups = pbiClient.Groups.GetGroupsAsAdmin().Value.ToList();
+                Message = String.Format("Number of groups in tenant: {0}", adminGroups.Count);
+            }
+            catch (Exception e)
+            {
+                Message = e.Message;
+            }
         }
 
         internal string GetToken()

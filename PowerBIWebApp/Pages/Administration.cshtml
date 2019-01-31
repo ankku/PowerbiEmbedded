@@ -4,6 +4,11 @@
     ViewData["Title"] = "Administration";
 }
 
+@if (Model.HasMessage)
+{
+    <h4>@Model.Message</h4>
+}
+
 <h2>Tenant groups</h2>
 
 @if (Model.adminGroups != null)

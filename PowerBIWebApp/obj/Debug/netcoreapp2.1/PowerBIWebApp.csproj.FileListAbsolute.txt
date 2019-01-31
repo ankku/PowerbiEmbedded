@@ -37,6 +37,5 @@ C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Debug\netcor
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\bin\Debug\netcoreapp2.1\IOC_PBIAdmin.dll
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\bin\Debug\netcoreapp2.1\IOC_PBIAdmin.pdb
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\bin\Debug\netcoreapp2.1\IOC_PBIAdmin.dll.config
-C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Debug\netcoreapp2.1\Razor\Pages\Admin.g.cshtml.cs
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Debug\netcoreapp2.1\Razor\Pages\Administration.g.cshtml.cs
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

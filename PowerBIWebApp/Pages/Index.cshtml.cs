@@ -4,24 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using IOC_PBIAdmin;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using System.Data;
-using Microsoft.PowerBI.Api.V2;
-using Microsoft.PowerBI.Api.V2.Models;
-using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace PowerBIWebApp.Pages
 {
-    public class IndexModel : PageModel
+    public  class IndexModel : PageModel
     {
+        public string Scopes { get; set; }
         public DataTable TableContent { get; set; }
 
         [BindProperty]
@@ -42,7 +39,7 @@ namespace PowerBIWebApp.Pages
         }
         public void OnPostData()
         {
-            var token = GetToken();
+            string token = GetToken();
 
             string baseUri = _configuration["AppSettings:BaseUri"];
             string url = baseUri + Query;
@@ -64,27 +61,29 @@ namespace PowerBIWebApp.Pages
             {
                 case "groups":
                     PBIGroups groups = JsonConvert.DeserializeObject<PBIGroups>(responseContent);
-                    TableContent = ListtoDataTable.ToDataTable(groups.List);
+                    TableContent = ToDataTable(groups.List);
                     break;
                 case "reports":
-                    PBIReports reports= JsonConvert.DeserializeObject<PBIReports>(responseContent);
-                    TableContent = ListtoDataTable.ToDataTable(reports.List);
+                    PBIReports reports = JsonConvert.DeserializeObject<PBIReports>(responseContent);
+                    TableContent = ToDataTable(reports.List);
                     break;
                 case "datasets":
                     PBIDataSets datasets = JsonConvert.DeserializeObject<PBIDataSets>(responseContent);
-                    TableContent = ListtoDataTable.ToDataTable(datasets.List);
+                    TableContent = ToDataTable(datasets.List);
                     break;
-/*
-                case "admin/groups":
-                    PBIGroups admingroups = JsonConvert.DeserializeObject<PBIGroups>(responseContent);
-                    TableContent = ListtoDataTable.ToDataTable(admingroups.List);
-                    break;
-*/
+                    /*
+                                    case "admin/groups":
+                                        PBIGroups admingroups = JsonConvert.DeserializeObject<PBIGroups>(responseContent);
+                                        TableContent = ListtoDataTable.ToDataTable(admingroups.List);
+                                        break;
+                    */
             }
         }
 
         public void OnGet()
         {
+            GetToken();
+
             /*
             string token = GetToken();
             string apiUrl = _configuration["AppSettings:ApiUrl"];
@@ -106,6 +105,8 @@ namespace PowerBIWebApp.Pages
             callTask.Wait();
             var token = callTask.Result;
 
+            Scopes = GetScopes(token);
+
             return token;
         }
 
@@ -115,11 +116,24 @@ namespace PowerBIWebApp.Pages
             return accessToken;
         }
 
-    }
+        internal string GetScopes(string token)
+        {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityToken securityToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
 
-    public static class ListtoDataTable
-    {
-        public static DataTable ToDataTable<T>(this IList<T> data)
+            string scopes = null;
+            //LM: Evaluation of lambda expression in current VS2017 version has bug:
+            //https://developercommunity.visualstudio.com/content/problem/377921/evaluation-of-native-methods-in-this-context-is-no.html
+            //after release of fix, the foreach should be replaced with following line
+            //scopes = securityToken.Claims.First(x => x.Type.Equals("scp"))
+
+            foreach (var claim in securityToken.Claims)
+                if (claim.Type.Equals("scp")) scopes = claim.Value;
+
+            return scopes;
+        }
+
+        internal DataTable ToDataTable<T>(IList<T> data)
         {
             PropertyDescriptorCollection props =
             TypeDescriptor.GetProperties(typeof(T));

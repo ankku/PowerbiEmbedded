@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.PowerBI.Api.V2;
 using Microsoft.PowerBI.Api.V2.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace PowerBIWebApp
 {
@@ -53,22 +54,27 @@ namespace PowerBIWebApp
             {
                 Configuration.GetSection("Authentication").Bind(options);
                 options.ClientSecret = Configuration["statoil-powerbiapp-secret"];
+
+
                 options.Events = new OpenIdConnectEvents()
                 {
                     OnAuthorizationCodeReceived = AuthorizationCodeReceived,
                     OnAuthenticationFailed = AuthenticationFailed
                 };
+
                 options.SaveTokens = true;
             });
 
             services.AddMvc(options =>
             {
-                //options.Filters.Add(typeof(Filters.AdalTokenAcquisitionExceptionFilter));
+                options.Filters.Add(typeof(Filters.AdalTokenAcquisitionExceptionFilter));
+
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-                options.Filters.Add(typeof(Filters.AdalTokenAcquisitionExceptionFilter));
+
+                //                options.Filters.Add(typeof(Filters.UnhandledExceptionFilter));
             })
             .AddRazorPagesOptions(options =>
             {
@@ -82,6 +88,8 @@ namespace PowerBIWebApp
         {
             try
             {
+                context.HandleCodeRedemption();
+
                 var request = context.HttpContext.Request;
                 var currentUri = UriHelper.BuildAbsolute(request.Scheme, request.Host, request.PathBase, request.Path);
                 var credential = new ClientCredential(context.Options.ClientId, context.Options.ClientSecret);
@@ -126,47 +134,20 @@ namespace PowerBIWebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
-            /*            
-                        if (env.IsDevelopment())
-                        {
-            //                app.UseBrowserLink();
-                            app.UseDeveloperExceptionPage();
-                        }
-                        else
-                        {
-                            app.UseExceptionHandler("/Error");
-                        }
-            */
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
+
             app.UseStaticFiles();
 
             app.UseAuthentication();
 
             app.UseMvc();
         }
-
-        #region Helpers
-        public string RESTWrapper(string RESTurl, string token)
-        {
-            string baseUri = Configuration["AppSettings:BaseUri"];
-            string url = baseUri + RESTurl;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-            request.ContentType = "application/json";
-            request.MediaType = "application/json";
-            request.Accept = "application/json";
-
-            request.ContentLength = 0;
-            request.Method = "GET";
-            request.Headers.Add("Authorization", String.Format("Bearer {0}", token));
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string responseContent = (new StreamReader(response.GetResponseStream())).ReadToEnd();
-
-            return responseContent;
-        }
-
-        #endregion
     }
 }
