@@ -32,5 +32,6 @@ namespace PowerBIWebApp.Controllers
                 OpenIdConnectDefaults.AuthenticationScheme
             );
         }
+
     }
 }

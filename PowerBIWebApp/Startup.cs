@@ -68,6 +68,7 @@ namespace PowerBIWebApp
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(Filters.AdalTokenAcquisitionExceptionFilter));
+//                options.Filters.Add(typeof(Filters.UnhandledExceptionFilter));
 
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
@@ -134,6 +135,13 @@ namespace PowerBIWebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+//            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
+//            app.UseExceptionHandler("/Error");
+
+            app.UseDeveloperExceptionPage();
+
+
+/*
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -142,12 +150,17 @@ namespace PowerBIWebApp
             {
                 app.UseExceptionHandler("/Error");
             }
-
+*/
             app.UseStaticFiles();
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

@@ -10,7 +10,8 @@ namespace PowerBIWebApp.Filters
     public class UnhandledExceptionFilter : ActionFilterAttribute, IExceptionFilter
     {
         public void OnException(ExceptionContext context)
-        {            
+        {
+//            context.HttpContext.TraceIdentifier = context.Exception.Message;
             context.Result = new BadRequestObjectResult(context.Exception.Message);
         }
     }

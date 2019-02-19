@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authentication;
-using IOC_PBIAdmin;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -57,6 +57,36 @@ namespace PowerBIWebApp.Pages
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string responseContent = (new StreamReader(response.GetResponseStream())).ReadToEnd();
 
+            JObject jObject = (JObject)JsonConvert.DeserializeObject(responseContent);
+
+            DataTable dt = new DataTable();
+            foreach (JProperty x in (JToken)jObject)
+            {
+                if (x.Name == "value")
+                {
+                    JArray rows = (JArray)x.Value;
+
+                    if (rows.Count == 0) continue;
+
+                    foreach (JObject row in (JToken)rows)
+                        foreach (JProperty header in (JToken)row)
+                            if(!dt.Columns.Contains(header.Name))
+                                dt.Columns.Add(header.Name);
+
+                    foreach (JObject row in (JToken)rows)
+                    {
+                        DataRow r = dt.NewRow();
+                        foreach (JProperty col in (JToken)row)
+                        {
+                            r[col.Name] = col.Value;
+                        }
+                        dt.Rows.Add(r);
+                    }
+                }
+            }
+
+            TableContent = dt;
+/*
             switch (Query)
             {
                 case "groups":
@@ -71,13 +101,12 @@ namespace PowerBIWebApp.Pages
                     PBIDataSets datasets = JsonConvert.DeserializeObject<PBIDataSets>(responseContent);
                     TableContent = ToDataTable(datasets.List);
                     break;
-                    /*
-                                    case "admin/groups":
-                                        PBIGroups admingroups = JsonConvert.DeserializeObject<PBIGroups>(responseContent);
-                                        TableContent = ListtoDataTable.ToDataTable(admingroups.List);
-                                        break;
-                    */
+                case "admin/groups":
+                    PBIGroups admingroups = JsonConvert.DeserializeObject<PBIGroups>(responseContent);
+                    TableContent = ToDataTable(admingroups.List);
+                    break;
             }
+*/
         }
 
         public void OnGet()

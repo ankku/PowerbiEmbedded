@@ -27,8 +27,8 @@ namespace PowerBIWebApp.Pages
 
         public void OnGet()
         {
-            try
-            {
+//            try
+//            {
                 string token = GetToken();
                 string apiUrl = _configuration["AppSettings:ApiUrl"];
 
@@ -36,12 +36,16 @@ namespace PowerBIWebApp.Pages
 
                 adminGroups = pbiClient.Groups.GetGroupsAsAdmin().Value.ToList();
                 Message = String.Format("Number of groups in tenant: {0}", adminGroups.Count);
+/*
             }
             catch (Exception e)
             {
-                Message = e.Message;
+                Message = e.Message + 
+                            "Inner Exception: " + e.InnerException +
+                            "StackTrace: " + e.StackTrace;
             }
-        }
+*/  
+    }
 
         internal string GetToken()
         {

@@ -5050,15 +5050,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
-      },
-      "IOC_PBIAdmin/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/IOC_PBIAdmin.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/IOC_PBIAdmin.dll": {}
-        }
       }
     }
   },
@@ -13477,16 +13468,10 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
-    },
-    "IOC_PBIAdmin/1.0.0": {
-      "type": "project",
-      "path": "../IOC_PBIAdmin/IOC_PBIAdmin.csproj",
-      "msbuildProject": "../IOC_PBIAdmin/IOC_PBIAdmin.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "IOC_PBIAdmin >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.Extensions.Configuration >= 2.1.1",
@@ -13531,11 +13516,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {
-            "C:\\Users\\mlenart\\Documents\\GitHub\\PowerbiEmbedded\\IOC_PBIAdmin\\IOC_PBIAdmin.csproj": {
-              "projectPath": "C:\\Users\\mlenart\\Documents\\GitHub\\PowerbiEmbedded\\IOC_PBIAdmin\\IOC_PBIAdmin.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

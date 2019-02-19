@@ -76,7 +76,7 @@ using System.Security.Principal;
             WriteLiteral("!</li>\r\n        <li>");
             EndContext();
             BeginContext(199, 73, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "576c39b055814a468e093a2d2759fb97", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b0dc6ddc3da43c889b6df8d17e36112", async() => {
                 BeginContext(260, 8, true);
                 WriteLiteral("Sign out");
                 EndContext();
@@ -112,7 +112,7 @@ else
             WriteLiteral("    <ul class=\"nav navbar-nav navbar-right\">\r\n        <li>");
             EndContext();
             BeginContext(360, 71, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0f2f531e819d4e14bee09f6acb5e9635", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "56748bb899ee4408981e75508c6303d9", async() => {
                 BeginContext(420, 7, true);
                 WriteLiteral("Sign in");
                 EndContext();

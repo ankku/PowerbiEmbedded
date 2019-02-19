@@ -38,5 +38,4 @@ C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Release\netc
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Release\netcoreapp2.1\PowerBIWebApp.csproj.CopyComplete
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Release\netcoreapp2.1\PowerBIWebApp.dll
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Release\netcoreapp2.1\PowerBIWebApp.pdb
-C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Release\netcoreapp2.1\Razor\Pages\Admin.g.cshtml.cs
 C:\Users\mlenart\Documents\GitHub\PowerbiEmbedded\PowerBIWebApp\obj\Release\netcoreapp2.1\Razor\Pages\Administration.g.cshtml.cs

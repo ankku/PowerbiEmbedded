@@ -5,18 +5,22 @@
     ViewData["Title"] = "Home page";
 }
 
-<h4>Scopes: @Model.Scopes</h4>
+<!--h4>Scopes: @Model.Scopes</h4-->
 
 <div>
 
     <form asp-page-handler="data" method="post">
-        https://analysis.windows.net/powerbi/api/
-        <select id="Select1" asp-for="Query">
-            <option>groups</option>
-            <option>reports</option>
-            <option>datasets</option>
-            <!--option>admin/groups</option-->
+        https://api.powerbi.com/v1.0/myorg/
+        <input id="Text1" type="text" asp-for="Query"/>
+        <!--
+            <select id="Select1" asp-for="Query">
+                <option>groups</option>
+                <option>reports</option>
+                <option>datasets</option>
+                <option>admin/groups</option>
+                <!--option>admin/groups</option-->
         </select>
+        -->
         <!--       <input type="search" asp-for="Query" />     -->
         <button>Query</button>
     </form>
