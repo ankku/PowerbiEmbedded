@@ -46,11 +46,12 @@ namespace PowerBIWebApp.Pages
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
+/*
             request.ContentType = "application/json";
             request.MediaType = "application/json";
             request.Accept = "application/json";
-
             request.ContentLength = 0;
+*/
             request.Method = "GET";
             request.Headers.Add("Authorization", String.Format("Bearer {0}", token));
 

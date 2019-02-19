@@ -93,7 +93,8 @@ namespace PowerBIWebApp
 
                 var request = context.HttpContext.Request;
                 var currentUri = UriHelper.BuildAbsolute(request.Scheme, request.Host, request.PathBase, request.Path);
-                var credential = new ClientCredential(context.Options.ClientId, context.Options.ClientSecret);
+                var credential = new ClientCredential(context.Options.ClientId, Configuration["Authentication:ClientSecret"]);
+//                var credential = new ClientCredential(context.Options.ClientId, context.Options.ClientSecret);
                 var code = context.ProtocolMessage.Code;
                 string userId = context.Principal.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
 

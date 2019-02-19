@@ -27,10 +27,16 @@ namespace PowerBIWebApp
                     IHostingEnvironment env = builderContext.HostingEnvironment;
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-//                    config.AddAzureKeyVault("https://statoil-mlenart.vault.azure.net/", new KeyVaultSecretManager());
+                    if (env.IsDevelopment())
+                    {
+                        config.AddUserSecrets<Startup>();
+                    }
+                    else
+                    {
+                        //config.AddAzureKeyVault("https://statoil-mlenart.vault.azure.net/", new KeyVaultSecretManager());
+                        config.AddAzureKeyVault("https://statoil-mlenart.vault.azure.net/");
+                    }
 
-                        //this need to be added back for Equinor deployment !!                    
-//                    config.AddAzureKeyVault("https://statoil-mlenart.vault.azure.net/");
                 });
 
     }
